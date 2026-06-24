@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>自然源溯油霜 · 主播手册</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d0e0b;--bg2:#161810;--bg3:#1f2114;
+  --green:#8a9a5b;--green-l:#b8c87a;--green-d:#5a6a35;
+  --amber:#c9a84c;--red:#c06060;--blue:#5a8aaa;
+  --text:#e8e6dc;--mid:#b0ae9e;--dim:#6e6c5e;--white:#f4f2e8;
+  --div:rgba(138,154,91,0.18);--pad:18px;
+}
+body{background:var(--bg);font-family:-apple-system,"PingFang SC","Noto Sans SC",sans-serif;color:var(--text);font-size:15px;line-height:1.75;padding-bottom:80px}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:99;background:var(--bg);border-bottom:1px solid var(--div);padding:0 var(--pad);height:48px;display:flex;align-items:center;justify-content:space-between}
+.nav-brand{font-size:12px;color:var(--green);letter-spacing:.08em}
+.nav-links{display:flex;list-style:none;overflow-x:auto;scrollbar-width:none;gap:0}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-links a{font-size:11px;color:var(--dim);text-decoration:none;padding:6px 10px;white-space:nowrap}
+.nav-links a:hover{color:var(--green)}
+#prog{position:fixed;top:48px;left:0;height:2px;background:var(--green);width:0;z-index:98}
+
+/* HERO */
+.hero{padding:44px var(--pad) 36px;border-bottom:1px solid var(--div)}
+.eyebrow{font-size:11px;letter-spacing:.22em;color:var(--green);text-transform:uppercase;margin-bottom:12px}
+.hero h1{font-size:28px;font-weight:700;color:var(--white);line-height:1.2;margin:0 0 8px}
+.hero h1 em{color:var(--green-l);font-style:normal}
+.hero-sub{font-size:13px;color:var(--dim);margin-bottom:22px}
+.rule{width:28px;height:2px;background:var(--green);margin-bottom:20px}
+
+/* 30秒结论卡 */
+.verdict{background:rgba(138,154,91,.08);border:1px solid rgba(138,154,91,.25);border-radius:14px;padding:20px 18px;margin-bottom:20px}
+.verdict-eye{font-size:10px;letter-spacing:.16em;color:var(--green);text-transform:uppercase;margin-bottom:12px}
+.verdict-items{display:flex;flex-direction:column;gap:10px}
+.vi{display:flex;gap:12px;align-items:flex-start}
+.vi-num{font-size:20px;font-weight:700;color:var(--green);opacity:.5;line-height:1;flex-shrink:0;min-width:22px}
+.vi-body{flex:1}
+.vi-q{font-size:13px;color:var(--dim);margin-bottom:3px}
+.vi-a{font-size:14px;color:var(--white);font-weight:500;line-height:1.5}
+.vi-a em{color:var(--green-l);font-style:normal}
+
+/* SECTION */
+.sec{padding:32px var(--pad) 0;border-top:1px solid var(--div)}
+.sec-eye{font-size:11px;letter-spacing:.22em;color:var(--green);text-transform:uppercase;margin-bottom:8px}
+.sec-title{font-size:21px;font-weight:700;color:var(--white);line-height:1.3;margin:0 0 6px}
+.sec-hint{font-size:12px;color:var(--dim);margin-bottom:20px}
+.sec-end{height:32px}
+
+/* VS onTop 对比条 */
+.vs-rows{display:flex;flex-direction:column;gap:6px;margin-bottom:20px}
+.vr{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.vr-cell{background:var(--bg2);border-radius:9px;padding:12px 13px}
+.vr-cell.win{background:rgba(138,154,91,.1);border:1px solid rgba(138,154,91,.2)}
+.vr-cell.dim-cell{opacity:.65}
+.vr-lbl{font-size:10px;color:var(--dim);margin-bottom:4px;letter-spacing:.04em}
+.vr-val{font-size:13px;color:var(--white);font-weight:500;line-height:1.4}
+.vr-note{font-size:11px;color:var(--dim);margin-top:3px;line-height:1.5}
+.badge{font-size:10px;padding:1px 6px;border-radius:3px;font-weight:600;margin-left:4px;vertical-align:middle}
+.b-win{background:var(--green);color:#fff}
+.b-lose{background:#333;color:#777}
+.b-gap{background:rgba(201,168,76,.3);color:var(--amber)}
+
+/* 适合/不适合 */
+.fit-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.fit-box{background:var(--bg2);border-radius:10px;padding:14px}
+.fit-label{font-size:10px;font-weight:700;letter-spacing:.1em;margin-bottom:10px}
+.fit-label.yes{color:var(--green-l)}
+.fit-label.no{color:#e08080}
+.fit-items{display:flex;flex-direction:column;gap:7px}
+.fit-item{font-size:12px;color:var(--mid);display:flex;gap:7px;line-height:1.5}
+.fit-icon{flex-shrink:0;margin-top:1px}
+.fit-item strong{color:var(--white)}
+.fit-item .sub{color:var(--dim);font-size:11px}
+.fit-note{font-size:11px;color:var(--amber);padding:9px 12px;background:rgba(201,168,76,.06);border-radius:8px;line-height:1.6;margin-top:6px}
+
+/* 弹幕对应表 */
+.barrage-table{display:flex;flex-direction:column;gap:6px;margin-bottom:20px}
+.bt-row{background:var(--bg2);border-radius:10px;padding:14px}
+.bt-trigger{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.bt-tag{font-size:11px;color:var(--dim);background:var(--bg3);border-radius:4px;padding:2px 8px}
+.bt-arrow{color:var(--green-d);font-size:13px}
+.bt-result{font-size:12px;font-weight:600}
+.bt-result.can{color:var(--green-l)}
+.bt-result.cant{color:#e08080}
+.bt-script{font-size:13px;color:var(--mid);line-height:1.75;border-left:2px solid var(--green-d);padding-left:10px}
+.bt-script strong{color:var(--white)}
+.bt-script .tip{font-size:11px;color:var(--dim);display:block;margin-top:4px}
+
+/* 成分弹药库（折叠） */
+.ammo-list{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+.ammo{background:var(--bg2);border-radius:12px;overflow:hidden}
+.ammo-h{display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;user-select:none}
+.ammo-h:hover{background:var(--bg3)}
+.ammo-icon{font-size:18px;flex-shrink:0}
+.ammo-meta{flex:1}
+.ammo-name{font-size:14px;color:var(--white);font-weight:500}
+.ammo-sub{font-size:11px;color:var(--dim);margin-top:2px}
+.ammo-tog{color:var(--green);font-size:16px;flex-shrink:0;transition:transform .3s}
+.ammo-tog.open{transform:rotate(45deg)}
+.ammo-b{display:none;padding:0 16px 16px}
+.ammo-b.open{display:block}
+.hook-box{background:rgba(138,154,91,.07);border:1px solid rgba(138,154,91,.15);border-radius:8px;padding:12px 14px;margin-bottom:10px}
+.hook-lbl{font-size:10px;color:var(--green);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+.hook-txt{font-size:13px;color:var(--text);line-height:1.85}
+.hook-txt strong{color:var(--white)}
+.defend-box{background:var(--bg3);border-radius:7px;padding:11px 13px;margin-top:8px}
+.defend-lbl{font-size:10px;color:var(--amber);letter-spacing:.08em;margin-bottom:5px}
+.defend-txt{font-size:12px;color:var(--mid);line-height:1.7}
+.defend-txt strong{color:var(--white)}
+
+/* 退货风险 */
+.risk-list{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+.risk{background:var(--bg2);border-radius:10px;padding:14px}
+.risk-head{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.risk-lv{font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px}
+.rv-h{background:rgba(192,96,96,.2);color:#e08080}
+.rv-m{background:rgba(201,168,76,.15);color:var(--amber)}
+.rv-l{background:rgba(138,154,91,.2);color:var(--green-l)}
+.risk-title{font-size:13px;color:var(--white);font-weight:500}
+.risk-desc{font-size:12px;color:var(--mid);line-height:1.65;margin-bottom:7px}
+.risk-fix{font-size:12px;color:var(--green-l);border-left:2px solid var(--green-d);padding-left:9px;line-height:1.6}
+
+/* 长期合作 */
+.lp-list{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+.lp{background:var(--bg2);border-radius:10px;padding:14px 16px;display:flex;gap:12px}
+.lp-icon{font-size:20px;flex-shrink:0;margin-top:2px}
+.lp-title{font-size:13px;color:var(--white);font-weight:500;margin-bottom:4px}
+.lp-desc{font-size:12px;color:var(--mid);line-height:1.65}
+
+/* FAQ */
+.faq-list{display:flex;flex-direction:column;gap:7px;margin-bottom:20px}
+.faq-item{background:var(--bg2);border-radius:10px;overflow:hidden}
+.faq-q{padding:13px 15px;font-size:13px;color:var(--white);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.faq-q:hover{background:var(--bg3)}
+.faq-i{color:var(--green);font-size:15px;flex-shrink:0;transition:transform .3s}
+.faq-i.open{transform:rotate(45deg)}
+.faq-a{display:none;padding:0 15px 12px;font-size:12px;color:var(--mid);line-height:1.8;border-top:1px solid var(--bg3)}
+.faq-a.open{display:block;padding-top:10px}
+.faq-a strong{color:var(--white)}
+
+/* CTA */
+.cta{background:rgba(138,154,91,.08);border:1px solid rgba(138,154,91,.25);border-radius:14px;padding:24px 18px;text-align:center;margin-bottom:8px}
+.cta-title{font-size:18px;font-weight:700;color:var(--white);margin-bottom:8px}
+.cta-sub{font-size:13px;color:var(--mid);line-height:1.8;margin-bottom:14px}
+.cta-contact{font-size:14px;color:var(--green-l);font-weight:500}
+
+footer{padding:24px var(--pad);text-align:center;border-top:1px solid var(--div)}
+.fb{font-size:13px;color:var(--green);letter-spacing:.18em;margin-bottom:4px}
+.fn2{font-size:11px;color:var(--dim)}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+
+<nav>
+  <div class="nav-brand">自然源溯油霜 · 主播手册</div>
+  <ul class="nav-links">
+    <li><a href="#why">为什么带</a></li>
+    <li><a href="#who">适合谁</a></li>
+    <li><a href="#how">怎么带</a></li>
+    <li><a href="#risk">退货风险</a></li>
+    <li><a href="#longterm">长期合作</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="eyebrow">主播合作手册 · 成分党版</div>
+  <h1>自然源溯<br><em>润养修护油霜</em></h1>
+  <div class="hero-sub">新本草 · 中草药 × 现代抗老科学 · 对标 onTop</div>
+  <div class="rule"></div>
+
+  <div class="verdict">
+    <div class="verdict-eye">读完这三条，再决定要不要继续</div>
+    <div class="verdict-items">
+      <div class="vi">
+        <div class="vi-num">1</div>
+        <div class="vi-body">
+          <div class="vi-q">成分经不经得起你粉丝审？</div>
+          <div class="vi-a"><em>经得起。</em> 二裂酵母第一位、麦角硫因、灵芝黄芪有文献，每个成分都有话讲。</div>
+        </div>
+      </div>
+      <div class="vi">
+        <div class="vi-num">2</div>
+        <div class="vi-body">
+          <div class="vi-q">比 onTop 强在哪？</div>
+          <div class="vi-a">成分深度。onTop没有二裂酵母、麦角硫因、灵芝、黄芪。<em>成分表第一位就是答案。</em></div>
+        </div>
+      </div>
+      <div class="vi">
+        <div class="vi-num">3</div>
+        <div class="vi-body">
+          <div class="vi-q">粉丝买了会不会退货？</div>
+          <div class="vi-a">说清楚适合谁，<em>精准客群的复购率极高。</em> 油皮和痘痘肌主动说不适合，退货率自然低。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Part 1：为什么带这款 ─── -->
+<div class="sec" id="why">
+  <div class="sec-eye">Part 01 · 为什么带这款</div>
+  <p class="sec-title">和 onTop 直接比</p>
+  <p class="sec-hint">成分表不会说谎，逐条对比</p>
+
+  <div class="vs-rows">
+    <div class="vr">
+      <div class="vr-cell win">
+        <div class="vr-lbl">自然源溯 · 第一位</div>
+        <div class="vr-val">二裂酵母发酵产物 <span class="badge b-win">优势</span></div>
+        <div class="vr-note">激活皮肤DNA自修复，高端抗老精华核心成分排首位</div>
+      </div>
+      <div class="vr-cell dim-cell">
+        <div class="vr-lbl">onTop · 第一位</div>
+        <div class="vr-val">水</div>
+        <div class="vr-note">标准水基配方，成分党第一眼就看出差距</div>
+      </div>
+    </div>
+    <div class="vr">
+      <div class="vr-cell win">
+        <div class="vr-lbl">抗老成分</div>
+        <div class="vr-val">麦角硫因 + 黄芪苷 + 二裂酵母 <span class="badge b-win">优势</span></div>
+        <div class="vr-note">三条独立抗老路径，比维C稳定10倍，端粒酶激活有文献</div>
+      </div>
+      <div class="vr-cell dim-cell">
+        <div class="vr-lbl">抗老成分</div>
+        <div class="vr-val">迷迭香 + 神经酰胺</div>
+        <div class="vr-note">无专项抗老核心成分</div>
+      </div>
+    </div>
+    <div class="vr">
+      <div class="vr-cell win">
+        <div class="vr-lbl">中草药体系</div>
+        <div class="vr-val">灵芝 · 黄芪 · 甘蔗 · 海藻 <span class="badge b-win">优势</span></div>
+        <div class="vr-note">真正的东方中药体系，新本草最正宗</div>
+      </div>
+      <div class="vr-cell dim-cell">
+        <div class="vr-lbl">中草药体系</div>
+        <div class="vr-val">迷迭香 · 芦荟 · 苦橙花</div>
+        <div class="vr-note">西方草本，严格说不是新本草</div>
+      </div>
+    </div>
+    <div class="vr">
+      <div class="vr-cell win">
+        <div class="vr-lbl">屏障修护</div>
+        <div class="vr-val">神经酰胺NP + 依克多因 <span class="badge b-win">优势</span></div>
+        <div class="vr-note">一个修内部脂质，一个抗外部应激，双重覆盖</div>
+      </div>
+      <div class="vr-cell dim-cell">
+        <div class="vr-lbl">屏障修护</div>
+        <div class="vr-val">神经酰胺NS/NG + 野大豆脂质</div>
+        <div class="vr-note">野大豆脂质是亮点，但缺依克多因</div>
+      </div>
+    </div>
+    <div class="vr">
+      <div class="vr-cell" style="background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.2)">
+        <div class="vr-lbl">香气体验</div>
+        <div class="vr-val">待定 <span class="badge b-gap">确认中</span></div>
+        <div class="vr-note">香型定下来后提供试用，主播用过才上播</div>
+      </div>
+      <div class="vr-cell" style="background:rgba(90,138,170,.08);border:1px solid rgba(90,138,170,.2)">
+        <div class="vr-lbl">香气体验</div>
+        <div class="vr-val">茉莉+苦橙花+苦橙叶 <span class="badge" style="background:var(--blue);color:#fff">onTop领先</span></div>
+        <div class="vr-note">多精油调香，市场已验证</div>
+      </div>
+    </div>
+    <div class="vr">
+      <div class="vr-cell" style="background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.2)">
+        <div class="vr-lbl">功效检测报告</div>
+        <div class="vr-val">修护 + 滋养 · 准备中 <span class="badge b-gap">开发期</span></div>
+        <div class="vr-note">修护和滋养方向已确定，正式检测推进中</div>
+      </div>
+      <div class="vr-cell" style="background:rgba(90,138,170,.08);border:1px solid rgba(90,138,170,.2)">
+        <div class="vr-lbl">功效检测报告</div>
+        <div class="vr-val">28天人体检测已有 <span class="badge" style="background:var(--blue);color:#fff">onTop领先</span></div>
+        <div class="vr-note">滋养·弹性·紧致·抗皱四项背书</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Part 2：适合谁 ─── -->
+<div class="sec" id="who">
+  <div class="sec-eye">Part 02 · 适合谁买</div>
+  <p class="sec-title">说清楚<br>比卖出去更重要</p>
+  <p class="sec-hint">精准说适合谁、不适合谁——退货率低，复购率高</p>
+
+  <div class="fit-grid">
+    <div class="fit-box">
+      <div class="fit-label yes">✓ 这款是为她们做的</div>
+      <div class="fit-items">
+        <div class="fit-item"><span class="fit-icon">🌵</span><div><strong>极干皮</strong><div class="sub">用乳液永远不够，要油脂才行</div></div></div>
+        <div class="fit-item"><span class="fit-icon">🕯</span><div><strong>28岁以上抗老</strong><div class="sub">开始认真看成分表的那类人</div></div></div>
+        <div class="fit-item"><span class="fit-icon">🛡</span><div><strong>敏感肌/换季修护</strong><div class="sub">刷酸后、屏障薄的修复期</div></div></div>
+        <div class="fit-item"><span class="fit-icon">🌱</span><div><strong>新本草爱好者</strong><div class="sub">在意成分来源，关注天然护肤</div></div></div>
+      </div>
+    </div>
+    <div class="fit-box">
+      <div class="fit-label no">✗ 主动说不适合</div>
+      <div class="fit-items">
+        <div class="fit-item"><span class="fit-icon">🚫</span><div><strong>油皮</strong><div class="sub">说了不腻还是腻，必退</div></div></div>
+        <div class="fit-item"><span class="fit-icon">🚫</span><div><strong>痘痘/闭口肌</strong><div class="sub">油脂体系不友好</div></div></div>
+        <div class="fit-item"><span class="fit-icon">🚫</span><div><strong>想快速美白祛斑</strong><div class="sub">没有专项美白成分</div></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="fit-note">💡 话术：「干皮、成熟肌、敏感肌换季——这三类买。油皮的姐妹今天不用抢，这款不是给你的。」——主动排除，精准转化。</div>
+  <div class="sec-end"></div>
+</div>
+
+<!-- ─── Part 3：怎么带 ─── -->
+<div class="sec" id="how">
+  <div class="sec-eye">Part 03 · 怎么带</div>
+  <p class="sec-title">弹幕出现什么<br>直接用哪句话接</p>
+  <p class="sec-hint">不需要背稿，看弹幕找对应场景</p>
+
+  <div class="barrage-table">
+
+    <div class="bt-row">
+      <div class="bt-trigger">
+        <div class="bt-tag">「好干」「起皮」「用什么都不够」</div>
+        <div class="bt-arrow">→</div>
+        <div class="bt-result can">✓ 接</div>
+      </div>
+      <div class="bt-script">
+        「干皮需要的是油脂，不只是水。这款<strong>角鲨烷30%</strong>——高添加量，和皮肤自己的油化学结构最像，10秒渗透不腻，涂完是被"喂饱了"的感觉，不是"涂了一层东西"。」
+        <span class="tip">→ 如果被追问"油霜会不会腻"：角鲨烷是植物来源，渗透极快，30%的用量是认真的配方，主体油脂用对了就不腻。</span>
+      </div>
+    </div>
+
+    <div class="bt-row">
+      <div class="bt-trigger">
+        <div class="bt-tag">「想抗老」「细纹」「松弛」「法令纹」</div>
+        <div class="bt-arrow">→</div>
+        <div class="bt-result can">✓ 接</div>
+      </div>
+      <div class="bt-script">
+        「这款的核心就是抗老。<strong>二裂酵母第一位</strong>，激活皮肤DNA自修复——不是帮皮肤做事，是让皮肤恢复自己工作的能力。加上麦角硫因持续抗氧，黄芪苷激活端粒酶，三条路同时走。」
+        <span class="tip">→ 成分党追问"比大牌怎么样"：很多大牌抗老精华的核心就是二裂酵母，这款第一位。</span>
+      </div>
+    </div>
+
+    <div class="bt-row">
+      <div class="bt-trigger">
+        <div class="bt-tag">「敏感肌」「刷酸后」「换季泛红」「屏障薄」</div>
+        <div class="bt-arrow">→</div>
+        <div class="bt-result can">✓ 接</div>
+      </div>
+      <div class="bt-script">
+        「敏感肌看两件事：防腐剂和香精。这款无香，防腐用1,2-己二醇，比传统防腐剂温和。<strong>神经酰胺NP修内部脂质，依克多因抗外部应激</strong>——屏障里外都管，刷酸后修复期首选。」
+        <span class="tip">→ 追问"神经酰胺NP和NS有什么区别"：NP是皮肤里含量最高的天然类型，最贴近皮肤本身。</span>
+      </div>
+    </div>
+
+    <div class="bt-row">
+      <div class="bt-trigger">
+        <div class="bt-tag">「脸暗」「氧化」「皮肤发黄」</div>
+        <div class="bt-arrow">→</div>
+        <div class="bt-result can">✓ 接，说清楚预期</div>
+      </div>
+      <div class="bt-script">
+        「麦角硫因、甘蔗多酚、维生素E，<strong>三路抗氧化持续对抗暗沉</strong>——但这款的提亮是皮肤补水饱满之后自然透亮，不是美白产品，不要期待快速祛斑。」
+        <span class="tip">→ 预期管理很重要，说清楚才不退货。</span>
+      </div>
+    </div>
+
+    <div class="bt-row">
+      <div class="bt-trigger">
+        <div class="bt-tag">「喜欢中草药」「新本草」「天然成分」</div>
+        <div class="bt-arrow">→</div>
+        <div class="bt-result can">✓ 接，这是品牌最强差异化</div>
+      </div>
+      <div class="bt-script">
+        「自然源溯用的是<strong>灵芝、黄芪</strong>——真正的中药体系，不是迷迭香、苦橙花那种西方草本。灵芝三萜抗氧化，黄芪苷激活端粒酶，每一个成分都有发表文献。这才是真正的新本草。」
+        <span class="tip">→ 和onTop区别：onTop用西方草本，我们用东方药材，两个体系完全不同。</span>
+      </div>
+    </div>
+
+    <div class="bt-row">
+      <div class="bt-trigger">
+        <div class="bt-tag">「医美后修复」「皮肤受损」「想促进修复」「细胞再生」</div>
+        <div class="bt-arrow">→</div>
+        <div class="bt-result can">✓ 接，这是配方里的隐藏亮点</div>
+      </div>
+      <div class="bt-script">
+        「这款有一个成分我特别想讲——<strong>DNA钠，也就是PDRN</strong>，在医美界常用于促进组织修复。这款添加到了起效量（0.01%以上），直接给细胞提供修复原料。二裂酵母是"打开修复开关"，PDRN是"补充修复燃料"，两个加在一起才是真正完整的细胞级修护。」
+        <span class="tip">→ 追问"PDRN是什么来源"：从鲑鱼精子DNA提取的活性成分，医美注射剂里早就在用，这款把它加到了起效量。</span>
+      </div>
+    </div>
+
+    <div class="bt-row">
+      <div class="bt-trigger">
+        <div class="bt-tag">「皮肤总发红」「容易敏感发炎」「毛细血管扩张」</div>
+        <div class="bt-arrow">→</div>
+        <div class="bt-result can">✓ 接</div>
+      </div>
+      <div class="bt-script">
+        「PDRN（DNA钠）有明确的抗炎通路——激活腺苷A2A受体，抑制促炎细胞因子。配合灵芝三萜的抗炎协同，这款在<strong>持续泛红、慢性炎症性敏感</strong>上的效果是有成分依据的。」
+        <span class="tip">→ 这是配方里其他成分没有覆盖到的方向，PDRN在这里是唯一主角。</span>
+      </div>
+    </div>
+
+    <div class="bt-row">
+      <div class="bt-trigger">
+        <div class="bt-tag">「油皮」「控油」「毛孔」「痘痘」</div>
+        <div class="bt-arrow">→</div>
+        <div class="bt-result cant">✗ 主动说不适合</div>
+      </div>
+      <div class="bt-script">
+        「<strong>油皮和痘痘肌不适合这款</strong>，这是干皮和成熟肌的产品。说清楚，买对了的人才不会退货，买错了的人现在不买是帮你保住口碑。」
+        <span class="tip">→ 主动排除是成分党主播最大的信任背书之一。</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 成分弹药库 -->
+  <p style="font-size:12px;color:var(--dim);margin-bottom:10px">被追问时用 · 展开看详细话术和粉丝问题应对</p>
+  <div class="ammo-list">
+
+    <div class="ammo">
+      <div class="ammo-h" onclick="toggleAmmo(this)">
+        <div class="ammo-icon">🧬</div>
+        <div class="ammo-meta">
+          <div class="ammo-name">二裂酵母 · 第一位 · 最强开场</div>
+          <div class="ammo-sub">DNA修复机制 · 成分党必讲</div>
+        </div>
+        <div class="ammo-tog">+</div>
+      </div>
+      <div class="ammo-b">
+        <div class="hook-box">
+          <div class="hook-lbl">直播间钩子</div>
+          <div class="hook-txt">「先让你们看成分表第一位——不是水，是<strong>二裂酵母发酵产物</strong>。你们知道某大牌卖那么贵核心是什么吗，就是这个。这款第一位就是它，配方是围绕它建的。」</div>
+        </div>
+        <div class="defend-box">
+          <div class="defend-lbl">粉丝追问：二裂酵母什么机制？</div>
+          <div class="defend-txt">「激活皮肤细胞DNA损伤修复通路——<strong>不是帮皮肤做事，是让皮肤恢复自己工作的能力</strong>。紫外线、污染、老化造成的细胞损伤，皮肤本来有能力自修复，二裂酵母是把这个能力激活。」</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ammo">
+      <div class="ammo-h" onclick="toggleAmmo(this)">
+        <div class="ammo-icon">⚗️</div>
+        <div class="ammo-meta">
+          <div class="ammo-name">麦角硫因 · 成分党热词</div>
+          <div class="ammo-sub">比维C稳定10倍 · 弹幕互动高</div>
+        </div>
+        <div class="ammo-tog">+</div>
+      </div>
+      <div class="ammo-b">
+        <div class="hook-box">
+          <div class="hook-lbl">直播间钩子</div>
+          <div class="hook-txt">「麦角硫因——<strong>比维C稳定10倍以上</strong>，维C涂上去接触空气就开始氧化，麦角硫因在皮肤里持续工作不失活。护肤品里的维C有一半在你涂上去之前就失效了，这款没这个问题。」</div>
+        </div>
+        <div class="defend-box">
+          <div class="defend-lbl">粉丝追问：和维C一样吗？</div>
+          <div class="defend-txt">「<strong>互补关系，不是替代</strong>。维C提亮更直接；麦角硫因更稳定，适合长期抗老打底。这款主打抗老修护，麦角硫因比维C更合适。」</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ammo">
+      <div class="ammo-h" onclick="toggleAmmo(this)">
+        <div class="ammo-icon">🏺</div>
+        <div class="ammo-meta">
+          <div class="ammo-name">灵芝+黄芪 · 新本草核心</div>
+          <div class="ammo-sub">破除"中草药=玄学"的最强话术</div>
+        </div>
+        <div class="ammo-tog">+</div>
+      </div>
+      <div class="ammo-b">
+        <div class="hook-box">
+          <div class="hook-lbl">直播间钩子</div>
+          <div class="hook-txt">「灵芝三萜——抗氧化和抗炎路径都有文献。黄芪苷——<strong>激活端粒酶</strong>，端粒是细胞老化的计时器，端粒酶激活就是从细胞层面踩刹车。这不是中医玄学，是有发表文章的。」</div>
+        </div>
+        <div class="defend-box">
+          <div class="defend-lbl">粉丝追问：和onTop都有草药，有什么不同？</div>
+          <div class="defend-txt">「onTop用迷迭香、苦橙花——<strong>西方草本</strong>。我们用灵芝、黄芪——<strong>东方中药体系</strong>，中医几千年用的药材，现代研究文献也是围绕这些做的。你要找真正的新本草，看用的是东方药材还是西方香草。」</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ammo">
+      <div class="ammo-h" onclick="toggleAmmo(this)">
+        <div class="ammo-icon">🌰</div>
+        <div class="ammo-meta">
+          <div class="ammo-name">角鲨烷 30% · 解决"油霜油腻"顾虑</div>
+          <div class="ammo-sub">高添加量 · 干皮场景必讲</div>
+        </div>
+        <div class="ammo-tog">+</div>
+      </div>
+      <div class="ammo-b">
+        <div class="hook-box">
+          <div class="hook-lbl">直播间钩子</div>
+          <div class="hook-txt">「油霜腻不腻，关键看主体油脂是什么。这款<strong>角鲨烷30%，用量是认真的</strong>，和皮肤自身皮脂结构最像，10秒渗透，不在皮肤上留油膜感。」</div>
+        </div>
+        <div class="defend-box">
+          <div class="defend-lbl">粉丝追问：角鲨烷和角鲨烯有什么区别？</div>
+          <div class="defend-txt">「<strong>烷是烯氢化后的</strong>——烯不饱和，容易氧化；烷饱和，更稳定安全，不会在皮肤上氧化产生刺激。护肤品用角鲨烷是更好的选择。」</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ammo">
+      <div class="ammo-h" onclick="toggleAmmo(this)">
+        <div class="ammo-icon">🛡</div>
+        <div class="ammo-meta">
+          <div class="ammo-name">依克多因+神经酰胺NP · 屏障双成分</div>
+          <div class="ammo-sub">敏感肌/换季场景</div>
+        </div>
+        <div class="ammo-tog">+</div>
+      </div>
+      <div class="ammo-b">
+        <div class="hook-box">
+          <div class="hook-lbl">直播间钩子</div>
+          <div class="hook-txt">「<strong>神经酰胺NP修内部脂质，依克多因抗外部应激</strong>——一个修里，一个防外，屏障才算真的修好了。很多产品只有神经酰胺，没有抗应激那条。」</div>
+        </div>
+        <div class="defend-box">
+          <div class="defend-lbl">粉丝追问：神经酰胺NP和NS/NG有什么区别？</div>
+          <div class="defend-txt">「都是神经酰胺，<strong>NP是皮肤里含量最高的天然类型</strong>，最贴近皮肤本身，修复效率高。」</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ammo">
+      <div class="ammo-h" onclick="toggleAmmo(this)">
+        <div class="ammo-icon">🧬</div>
+        <div class="ammo-meta">
+          <div class="ammo-name">DNA钠（PDRN）· 配方隐藏亮点</div>
+          <div class="ammo-sub">细胞再生 · 抗炎修护 · 医美同源成分 · 添加到起效量</div>
+        </div>
+        <div class="ammo-tog">+</div>
+      </div>
+      <div class="ammo-b">
+        <div class="hook-box">
+          <div class="hook-lbl">直播间钩子</div>
+          <div class="hook-txt">「这款有一个很多人没注意到的成分——成分表里的DNA钠，学名PDRN，聚脱氧核糖核苷酸。<strong>医美注射剂里早就在用它了</strong>，促进组织修复和细胞再生。这款把它加到了起效量，不是放一点点凑成分表——这是配方里负责"细胞修复燃料"那条线的成分。」</div>
+        </div>
+        <div class="defend-box">
+          <div class="defend-lbl">完整讲解逻辑：二裂酵母 + PDRN 的配合</div>
+          <div class="defend-txt">「二裂酵母负责<strong>激活皮肤自修复机制</strong>——打开开关。PDRN负责<strong>直接提供细胞修复所需的核苷酸原料</strong>——补充燃料。一个激活能力，一个补充材料，这才是完整的细胞级修护逻辑。配方里其他产品要么只有前者，要么只有后者，这款两个都有。」</div>
+        </div>
+        <div class="defend-box" style="margin-top:8px">
+          <div class="defend-lbl">粉丝追问：PDRN是什么来源，安全吗？</div>
+          <div class="defend-txt">「从鲑鱼精子DNA提取，经过纯化处理。医美界用它做注射修复剂已经很多年，文献充分，安全性有记录。护肤品里的添加量远低于医美注射浓度，外用安全性更高。」</div>
+        </div>
+        <div class="defend-box" style="margin-top:8px">
+          <div class="defend-lbl">粉丝追问：PDRN对什么皮肤问题最有用？</div>
+          <div class="defend-txt">「三个方向：<strong>①细胞再生修护</strong>——医美后、屏障受损后促进恢复；<strong>②抗炎舒缓</strong>——通过腺苷A2A受体通路抑制炎症因子，持续泛红、慢性敏感有效；<strong>③协同抗老</strong>——给细胞更新提供原料，配合二裂酵母效果叠加。这款配方里其他成分在抗炎这条线相对弱，PDRN正好补上来。」</div>
+        </div>
+        <div style="font-size:11px;color:var(--amber);padding:9px 11px;background:rgba(201,168,76,.06);border-radius:6px;margin-top:8px;line-height:1.6">⚠ 添加量待工程师最终确认，确认后更新具体数值。当前已知：0.01%以上起效量级别。</div>
+      </div>
+    </div>
+
+  </div>
+  <div class="sec-end"></div>
+</div>
+
+<!-- ─── Part 4：退货风险 ─── -->
+<div class="sec" id="risk">
+  <div class="sec-eye">Part 04 · 退货风险</div>
+  <p class="sec-title">这几点<br>提前说清楚</p>
+  <p class="sec-hint">成分党主播的口碑靠退货率保护</p>
+
+  <div class="risk-list">
+    <div class="risk">
+      <div class="risk-head"><div class="risk-lv rv-h">高风险</div><div class="risk-title">油皮买了觉得腻</div></div>
+      <div class="risk-desc">油霜品类天然不适合油皮，没说清楚就会退货。</div>
+      <div class="risk-fix">「油皮的姐妹今天不用抢，这款不是给你的」——主动排除，精准客群反而转化率更高。</div>
+    </div>
+    <div class="risk">
+      <div class="risk-head"><div class="risk-lv rv-h">高风险</div><div class="risk-title">香气和预期不符</div></div>
+      <div class="risk-desc">香型还在确认中，主播没用过就上播，收到实物和描述不符必退。</div>
+      <div class="risk-fix">前提：<strong>香型定下来，主播自己试用后认可再上播</strong>。用自己的真实感受描述，比任何脚本都有说服力。</div>
+    </div>
+    <div class="risk">
+      <div class="risk-head"><div class="risk-lv rv-m">中风险</div><div class="risk-title">期待美白祛斑效果</div></div>
+      <div class="risk-desc">没有专项美白成分，过度暗示提亮会导致失望退货。</div>
+      <div class="risk-fix">「这款提亮是补水后皮肤自然透亮，不是美白产品」——预期对了，退货自然少。</div>
+    </div>
+    <div class="risk">
+      <div class="risk-head"><div class="risk-lv rv-l">低风险</div><div class="risk-title">被问功效检测数据</div></div>
+      <div class="risk-desc">onTop有28天人体检测，我们修护和滋养方向的检测正在推进中，成分党粉丝可能追问。</div>
+      <div class="risk-fix">「修护和滋养方向的检测在做了，以这个配方我对数据有信心。目前我能背书的是成分表——每个成分都可以自己查文献，经得起查。」</div>
+    </div>
+  </div>
+  <div class="sec-end"></div>
+</div>
+
+<!-- ─── Part 5：长期合作 ─── -->
+<div class="sec" id="longterm">
+  <div class="sec-eye">Part 05 · 长期合作</div>
+  <p class="sec-title">为什么值得<br>长期绑定</p>
+
+  <div class="lp-list">
+    <div class="lp">
+      <div class="lp-icon">🧬</div>
+      <div>
+        <div class="lp-title">原料自研，成分迭代有底气</div>
+        <div class="lp-desc">中耀博研生物医药自研中草药提取体系，下一版配方用什么成分，不依赖外部采购市场，成分党主播的信誉需要背后有持续进步的品牌支撑。</div>
+      </div>
+    </div>
+    <div class="lp">
+      <div class="lp-icon">🤝</div>
+      <div>
+        <div class="lp-title">实时成分技术支持</div>
+        <div class="lp-desc">成分追问是成分党直播间的日常风险。长期合作主播遇到边缘问题可以直接联系研发确认，不靠你现场发挥，这是品牌保护主播专业形象的具体承诺。</div>
+      </div>
+    </div>
+    <div class="lp">
+      <div class="lp-icon">📦</div>
+      <div>
+        <div class="lp-title">完整产品线即将上线</div>
+        <div class="lp-desc">沁透焕肤精粹水 + 凝时润肤精华乳即将上线，可以围绕"自然源溯完整护肤体系"持续出内容——不是一款产品讲完就没了。</div>
+      </div>
+    </div>
+    <div class="lp">
+      <div class="lp-icon">📈</div>
+      <div>
+        <div class="lp-title">赛道早期，先合作先建立认知</div>
+        <div class="lp-desc">新本草油霜赛道正在增速。现在合作的主播是在帮粉丝发现一个新品牌，早期深度合作的价值，比品牌成熟后作为众多带货主播之一高得多。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>粉丝拿这款和onTop比，怎么回答？</span><span class="faq-i">+</span></div>
+      <div class="faq-a">直接比第一位：onTop是水，这款是二裂酵母。然后说一句：「<strong>成分表不会说谎，你们自己判断</strong>。」不需要贬低onTop，让粉丝得出结论，说服力更强。</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>功效检测报告什么时候有，粉丝追问怎么办？</span><span class="faq-i">+</span></div>
+      <div class="faq-a">「修护和滋养方向的检测正在推进，我现在能背书的是成分表——二裂酵母、麦角硫因、黄芪苷这些你们可以自己查文献。<strong>我不靠数字说服你，我靠成分表说服你。</strong>检测结果出来第一时间更新。」成分党粉丝最怕数字被编造，这种坦诚反而加分。</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>品牌资历浅，和成熟品牌比有信任风险吗？</span><span class="faq-i">+</span></div>
+      <div class="faq-a">对成分党主播这反而是机会：<strong>新品牌比大牌更需要靠成分说话</strong>，配方不扎实根本活不下来。中耀博研的研发体系是真实背书，不是靠营销砸出来的，成分党粉丝验证后反而更信任。</div>
+    </div>
+  </div>
+
+  <div class="cta">
+    <div class="cta-title">香型定下来后，先给你样品</div>
+    <div class="cta-sub">用过你自己认可了再播<br>用自己真实感受讲的东西，粉丝感受得到</div>
+    <div class="cta-contact">联系品牌方 → 确认合作方向 + 样品试用</div>
+  </div>
+  <div class="sec-end"></div>
+</div>
+
+<footer>
+  <div class="fb">自然源溯 · 新本草</div>
+  <div class="fn2">成分党主播合作手册 · 整合版</div>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{
+  const p=window.scrollY/(document.documentElement.scrollHeight-window.innerHeight)*100;
+  document.getElementById('prog').style.width=p+'%';
+});
+function toggleAmmo(h){
+  const b=h.nextElementSibling,t=h.querySelector('.ammo-tog'),o=b.classList.contains('open');
+  document.querySelectorAll('.ammo-b').forEach(x=>x.classList.remove('open'));
+  document.querySelectorAll('.ammo-tog').forEach(x=>x.classList.remove('open'));
+  if(!o){b.classList.add('open');t.classList.add('open');}
+}
+function toggleFaq(q){
+  const a=q.nextElementSibling,i=q.querySelector('.faq-i'),o=a.classList.contains('open');
+  document.querySelectorAll('.faq-a').forEach(x=>x.classList.remove('open'));
+  document.querySelectorAll('.faq-i').forEach(x=>x.classList.remove('open'));
+  if(!o){a.classList.add('open');i.classList.add('open');}
+}
+</script>
+</body>
+</html>
